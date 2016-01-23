@@ -1,13 +1,25 @@
-<h1><%= @message.title %></h1>
+<h1>Author: <%= @message.author %></h1>
+
+<% if !@message.created_at.nil? %>
+  <h6><%= @message.created_at %></h6>
+<% end %>
 
 <p>
-  Author: <%= @message.author %>
+  <%= @message.content %> 
 </p>
 
-<p>
-  <%= @message.content %>
-</p>
+<% if !@message.url.nil? %>
+  <p><a href="<%= @message.url %>"><%= @message.url %></a></p>
+<% end %>
+
+<div>
+  <% if !@messages_from_user.empty? %>
+    <h4>Other posts from this user</h4>
+      <% @messages_from_user.each do |message| %>
+        <p><%= message.content %></p>
+      <% end %>
+  <% end %>
+</div>
 
 <hr/>
 <a href="/messages">Back to All Messages</a>
-

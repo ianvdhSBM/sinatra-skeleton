@@ -15,14 +15,18 @@ end
 
 get '/messages/:id' do
   @message = Message.find params[:id]
+  @user = @message.author
+  @messages_from_user = Message.where(author: @message.author).where.not(id: @message.id)
   erb :'messages/show'
 end
 
 post '/messages' do
   @message = Message.new(
-    title: params[:title],
     content: params[:content],
-    author: params[:author]
+    author: params[:author],
+    url: params[:url],
+    created_at: params[:created_at],
+    updated_at: params[:updated_at]
     )
   if @message.save
     redirect '/messages'
@@ -30,3 +34,4 @@ post '/messages' do
     erb :'/messages/new'
   end
 end
+
